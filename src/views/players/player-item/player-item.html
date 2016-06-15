@@ -1,0 +1,64 @@
+<div
+  [ngClass]="{'player-item--completed': player.completed, 'player-item--editing': editing}"
+  class="player-item"
+  tabindex="0">
+
+  <div class="cell">
+    <button
+      *ngIf="!editing"
+      (click)="toggleStatus()"
+      aria-label="Mark player as completed"
+      class="player-item__button"
+      type="button">
+      <span class="icon material-icons" [ngClass]="{'icon--active': player.completed}">done</span>
+    </button>
+  </div>
+
+  <div class="cell">
+    <div
+      *ngIf="!editing"
+      class="player-item__title"
+      tabindex="0">
+      {{ player.name }}
+    </div>
+
+    <form class="player-form" *ngIf="editing" (ngSubmit)="saveTitle()" novalidate>
+      <input
+        (blur)="stopEditing()"
+        (keyup.escape)="stopEditing()"
+        ngControl="name"
+        [(ngModel)]="name"
+        autocomplete="off"
+        autofocus
+        class="player-item__input"
+        type="text">
+    </form>
+  </div>
+
+  <div class="cell">
+    <button
+      *ngIf="editing"
+      (click)="stopEditing()"
+      aria-label="Cancel editing"
+      class="player-item__button"
+      type="button">
+      <span class="icon material-icons">&#xe14c;</span>
+    </button>
+    <button
+      *ngIf="!editing"
+      (click)="editTitle()"
+      aria-label="Edit player name"
+      class="player-item__button"
+      type="button">
+      <span class="icon material-icons">edit</span>
+    </button>
+    <button
+      *ngIf="!editing"
+      (click)="remove.emit()"
+      aria-label="Delete player"
+      class="player-item__button"
+      type="button">
+      <span class="icon material-icons">delete</span>
+    </button>
+  </div>
+</div>
